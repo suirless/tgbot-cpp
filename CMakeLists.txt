@@ -53,15 +53,22 @@ endif()
 
 ## boost
 set(Boost_USE_MULTITHREADED ON)
-if (ENABLE_TESTS)
-    find_package(Boost 1.59.0 COMPONENTS system unit_test_framework REQUIRED)
-else()
-    find_package(Boost 1.59.0 COMPONENTS system REQUIRED)
+
+if (NOT WIN32)
+	if (ENABLE_TESTS)
+		find_package(Boost 1.59.0 COMPONENTS system unit_test_framework REQUIRED)
+	else()
+		find_package(Boost 1.59.0 COMPONENTS system REQUIRED)
+	endif()
 endif()
+
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIR_RELEASE})
-if(NOT Boost_USE_STATIC_LIBS)
-	add_definitions(-DBOOST_ALL_DYN_LINK)
+
+if (NOT WIN32)
+	if(NOT Boost_USE_STATIC_LIBS)
+		add_definitions(-DBOOST_ALL_DYN_LINK)
+	endif()
 endif()
 
 set(LIB_LIST
