@@ -71,12 +71,15 @@ if (NOT WIN32)
 	endif()
 endif()
 
+if (NOT CURL_FOUND)
+	set(CURL_LIBRARIES "")
+endif()
+
 set(LIB_LIST
     ${CMAKE_THREAD_LIBS_INIT}
     ${ZLIB_LIBRARIES}
     ${OPENSSL_LIBRARIES}
     ${Boost_LIBRARIES}
-    ${CURL_LIBRARIES}
 )
 
 # building project
